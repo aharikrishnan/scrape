@@ -2,14 +2,15 @@
 
 Use this project for bootstraping web scrapping
 
-> :warning: **Please read the website T&C before scrapping** as scrapping might not be legal in many countries
+> :warning: **Please read the website T&C before scrapping** as scrapping is not legal in many countries
 
 
 ### Installation
 
 ```bash
-  $ git clone https://github.com/aharikrishnan/scrape && cd scrape
-  $ npm i
+  git clone https://github.com/aharikrishnan/scrape \
+    && cd scrape \
+    && npm i
 ```
 
 
