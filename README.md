@@ -21,6 +21,8 @@ Use this project for bootstraping web scrapping
 ### Usage
 
 ```bash
+$ node index.js --help
+
 Options:
       --version         Show version number                            [boolean]
       --in, --infile    input file containing list of urls to crawl
