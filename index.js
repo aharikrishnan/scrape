@@ -7,6 +7,8 @@ var argv = require('yargs')
   .example('$0 -in url_list -out url_price_out', 'extracts price from www.flipkart.com and www.amazon.in urls')
   .alias('i', 'infile')
   .alias('o', 'outfile')
+  .alias('d', 'delay')
+  .alias('c', 'maxConcurrency')
   .nargs('i', 1)
   .describe('i', 'input file containing list of urls to crawl')
   .nargs('o', 1)
@@ -23,6 +25,8 @@ console.log(argv, argv.infile)
 if (argv.infile) {
   infile = fs.createReadStream(argv.infile);
 }
+argv.delay = argv.delay || 5 * 100
+argv.maxConcurrency = argv.maxConcurrency || 5
 
 function extract() {
   debugger
@@ -69,6 +73,8 @@ const exporter = new CSVExporter({
 
 (async () => {
   const crawler = await HCCrawler.launch({
+    delay: argv.delay,
+    maxConcurrency: argv.maxConcurrency,
     executablePath: '/usr/bin/google-chrome',
     headless: false,
     evaluatePage: extract,
