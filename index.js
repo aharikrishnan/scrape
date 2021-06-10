@@ -29,7 +29,6 @@ argv.delay = argv.delay || 5 * 100
 argv.maxConcurrency = argv.maxConcurrency || 5
 
 function extract() {
-  debugger
   var domain = window.location.host
   var item_json = {}
   console.log("extracting...", domain)
@@ -60,7 +59,6 @@ function extract() {
   else if (domain == 'www.flipkart.com') {
     item_json = extractFlipkart()
   }
-  debugger
   return item_json
 }
 
