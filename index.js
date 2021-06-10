@@ -31,14 +31,11 @@ function extract() {
   console.log("extracting...", domain)
   var extractAmazon = function() {
     console.log("extracting amazon...")
-    var title = document.getElementById('title').innerText.innerText
-    var offer_price = document.getElementById("priceblock_ourprice").innerText
-    var raw_price = document.getElementById('price').innerText
     var item_json = {
       "type": "Amazon",
-      "title": title,
-      "offer_price": offer_price,
-      "raw_price": raw_price
+      "title": document.getElementById('title').innerText,
+      "offer_price": document.getElementById("priceblock_ourprice").innerText,
+      "raw_price": document.getElementById('price').innerText
     }
     return item_json
   }
@@ -78,6 +75,24 @@ const exporter = new CSVExporter({
     waitUntil: 'networkidle2',
     retryCount: 0,
     jQuery: false,
+    customCrawl: async (page, crawl) => {
+      // You can access the page object before requests
+      await page.setRequestInterception(true);
+      page.on('request', request => {
+        if (['image', 'stylesheet', 'font','other'].includes(request.resourceType())) {
+          request.abort();
+        } else {
+            request.continue();
+        }
+      });
+      // The result contains options, links, cookies and etc.
+      const result = await crawl();
+      // You need to extend and return the crawled result
+      return result;
+    },
+    onSuccess: result => {
+      console.log(`Crawled ${result.options.url}.`);
+    },
     requestfailed: (err) => {
       console.err("Request failed! ", err)
     },
